@@ -1,12 +1,16 @@
 form {
-  border: 10px solid #f1f1f1;
+  border: 5px solid #f1f1f1;
   text-align: left;
   width: 40%;
   height: 50%;
   display: block;
   float: right;
   margin-right: 30%;
-  margin-top: 5%;
+  margin-top: 3%;
+  }
+
+  body{
+     font: 15px/1.5 Arial, Helvetica,sans-serif;
   }
 
 /* Full-width inputs */
@@ -16,8 +20,9 @@ input[type=text], input[type=password] {
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
-   border: 2px solid #1fb8e2;
+  border: 1px solid #f1f1f1;
   box-sizing: border-box;
+   background: #e6e6e6;
 }
 button {
 
