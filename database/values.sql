@@ -1,6 +1,6 @@
-INSERT INTO 'lsit'
+INSERT INTO 'list'
 (`username`,`pass`)
 VALUES
 ("shamin","spass"),
 ("adnan","apass"),
-("ayaan","ypass");
+("ayaan","ypass"),("rohit","rpass");
