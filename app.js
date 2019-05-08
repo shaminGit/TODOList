@@ -11,6 +11,6 @@ app.use(bodyParser.json());           //
 connection.init();                //to initialize the connection
 routes.configure(app);            // to route the request from client
 
-var server = app.listen(5000, function(){              //start the server at port 8000
+var server = app.listen(5000, function(){              //start the server at port 5000
   console.log('Server listening on port ' + server.address().port);
 });
