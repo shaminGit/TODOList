@@ -1,0 +1,32 @@
+{
+  "name": "qkeep",
+  "version": "1.0.0",
+  "description": "alternative app for google keep",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaminGit/todolist.git"
+  },
+  "keywords": [
+    "Node.js",
+    "express.js",
+    "mysql",
+    "html5",
+    "css",
+    "javascript"
+  ],
+  "author": "Shamin Ali <shaminali14@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaminGit/todolist/issues"
+  },
+  "homepage": "https://github.com/shaminGit/todolist#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "mysql": "^2.17.1"
+  }
+}
