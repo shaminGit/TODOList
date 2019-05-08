@@ -12,7 +12,7 @@ module.exports = {                                //now use export so that third
       todo.create(req.body,res);
     });
     app.put('/todo/:id',function(req,res) {
-      todo.update(req.body.name,req.params.id,res);
+      todo.update(req.body.username,req.params.id,res);
     });
     app.delete('/todo/:id',function(req,res) {
       todo.delete(req.params.id,res);
