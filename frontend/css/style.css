@@ -8,6 +8,7 @@ header{
   color: #ffffff;
   padding-top: 30px;
   min-height: 70px;
+  border-bottom: 10px solid #c6c6bc; 
 }
 header a{
   color: #ffffff;
