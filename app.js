@@ -7,6 +7,8 @@ var routes = require('./controller/route');
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));    //
 app.use(bodyParser.json());           //
+app.use(express.static('frontend'));    // to server static files to the client
+
 
 connection.init();                //to initialize the connection
 routes.configure(app);            // to route the request from client
