@@ -1,4 +1,5 @@
 var connection = require('../dbconfig/connection');
+
 //var display = require('dom.js');
 // declaring function // TODO:
 
@@ -21,6 +22,19 @@ function Todo() {
       });
     });
   };
+  this.fetchnote = function(todo , res){
+    connection.acquire(function(err, con){
+       console.log(todo);
+        con.query('select usernote from usernotes where username = ?',"shamin",function(err , result){
+          con.release();
+          var str = JSON.stringify(result);
+          var json = JSON.parse(str);
+          res.send(json);    // row data packet
+          console.log(json);   //row data packet
+        });
+    });
+  };
+
   // this section will handle the login task..
   this.login = function(todo,res) {
     var username=todo.username;
@@ -40,20 +54,8 @@ function Todo() {
             res.send('<h1>Login Successful!!</h1><button type="submit"><a href="http://localhost:5000/index.html"><b>Lets Start</a></button>');
             console.log("Login Successfull");
             // estabilishing connections for displaying notes..
-            con.query('select *from usernotes where username= ?',username, function(err , result){
-                 con.release();
-                 var string = JSON.stringify(result);   // to convert rowdatapacket into json object
-                 var json2 = JSON.parse(string);
-                 if (err) {
-                 //res.send({status:1, message:'fetching from database failed'});
-                 }
-                 else {
-                 //  res.send({note:json2[0].usernote});
-                  console.log(json2[0].usernote);      // fetching the uesrnote value from json object
-                 }
-               });
-           }
-        else res.send('<h1>Login Failed!!</h1><button type="submit"><a href="http://localhost:5000/login.html"><b>Try Again</a></button>');
+          }
+        else res.send('<h1>Login Failed!!</h1><button type="submit" ><a href="http://localhost:5000/login.html"><b>Try Again</a></button>');
          }
 
       });
@@ -63,13 +65,15 @@ function Todo() {
 
   this.signup = function(todo,res) {
     connection.acquire(function(err,con) {
-      con.query('insert into list set ?', todo, function(err,result) {
+      var username = todo.username;
+      var pass = todo.pass;
+      con.query('insert into list (username,pass) values (? ,?)',[username,pass],function(err,result) {
         con.release();
         if (err) {
-          res.send({status:1, message:'TODO creation fail'});
+          res.send('<h1>Signup failed</h1>');
         } else {
-          res.send({status:0, message:'TODO create success'});
-          console.log("Post successful");
+          res.send('<h1>Signup Done</h1><button type="submit"><a href="http://localhost:5000/login.html"><b>Login to Begin</a></button>');
+          console.log("signup successful");
         }
       });
     });
@@ -104,5 +108,7 @@ function Todo() {
     });
   };
 };
+
+
 
 module.exports = new Todo();

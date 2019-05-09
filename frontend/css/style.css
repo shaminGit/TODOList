@@ -3,6 +3,10 @@
   margin: auto;
   overflow: hidden;
 }
+body{
+   font: 15px/1.5 Arial, Helvetica,sans-serif;
+}
+
 header{
   background: #35424a;
   color: #ffffff;
@@ -127,6 +131,7 @@ ul li.checked::before {
   padding: 30px 40px;
   color: white;
   text-align: center;
+
 }
 
 /* Clear floats after the header */
@@ -141,10 +146,11 @@ input {
   margin: 0;
   border: none;
   border-radius: 0;
-  width: 75%;
+  width: 100%;
   padding: 10px;
   float: left;
   font-size: 16px;
+
 }
 
 /* Style the "Add" button */
@@ -159,7 +165,8 @@ input {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 0;
-  margin-left: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 .addBtn:hover {

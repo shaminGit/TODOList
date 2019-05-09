@@ -23,14 +23,18 @@
         <div id="nav">
          <a href="signup.html">SignUp</a>
         </div>
+        <div id ="user"></div>
        </nav>
     </div>
   </header>
 
 <div id="myDIV" class="header">
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add New Notes</span>
+  <input type="text" id="myInput" placeholder="Notes...">
+  <span onclick="addElement()" class="addBtn">Add</span>
+  <span onclick="modElement()" class="addBtn">Modify</span>
+  <span onclick="markComplete()" class="addBtn">Save</span>
   <span onclick="oldElements()" class="addBtn">Get Old</span>
+
 </div>
 
 <ul id="myUL">
