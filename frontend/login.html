@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="js/script.js"></script>
+<script src="js/login.js"></script>
+
 </head>
 
 <body>
@@ -29,7 +31,7 @@
     </div>
   </header>
 
-<form>
+<form name ="loginform" action ="js/login.js" method="POST">
 
   <div class="imgcontainer">
     <img src="img/login.png" alt="Avatar" class="avatar">
@@ -37,14 +39,14 @@
 
     <div id="us">
      <label for="uname"><b>Username</b></label>
-     <input type="text" placeholder="Enter Username" name="uname" required>
+     <input type="text" placeholder="Enter Username" name="username" required>
     </div>
      <div id="us">
      <label for="psw"><b>Password</b></label>
-     <input type="password" placeholder="Enter Password" name="psw" required>
+     <input type="password" placeholder="Enter Password" name="pass" required>
     </div>
      <div id="us">
-      <button type="submit"><b>Login</button>
+      <button type="submit" onclick="loginForm(this.form);"><b>Login</button>
      </div>
   </form>
 </body>

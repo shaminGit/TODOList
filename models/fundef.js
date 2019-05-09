@@ -21,10 +21,33 @@ function Todo() {
       });
     });
   };
-  this.create = function(todo,res) {
+  // this section will handle the login task..
+  this.login = function(todo,res) {
     connection.acquire(function(err,con) {
-      con.query
-      ('insert into list set ?', todo, function(err,result) {
+      var username=todo.username;
+      var pass = todo.pass;
+
+      con.query('select *from list where username= ?', username , function(err,result) {
+        con.release();
+        var string = JSON.stringify(result);   // to convert rowdatapacket into json object
+        var json = JSON.parse(string);
+        if (err) {
+          res.send({status:1, message:'TODO creation fail'});
+        }
+        else {
+          if(json[0].pass == pass)
+          {
+            res.send({status:0,message:"Login Successful"});
+            console.log("Login Successfull");
+          }
+        else res.send({status:0, message:'Enter correct Password'});
+         }
+      });
+    });
+  };
+  this.signup = function(todo,res) {
+    connection.acquire(function(err,con) {
+      con.query('insert into list set ?', todo, function(err,result) {
         con.release();
         if (err) {
           res.send({status:1, message:'TODO creation fail'});
@@ -35,6 +58,7 @@ function Todo() {
       });
     });
   };
+
 
   this.update = function(todo,id,res) {
     connection.acquire(function(err,con) {
@@ -49,6 +73,7 @@ function Todo() {
       });
     });
   };
+
   this.delete = function(id,res) {
     connection.acquire(function(err,con) {
       con.query('delete from list where id = ?', id, function(err,result) {
