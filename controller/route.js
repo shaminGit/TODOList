@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {                                //now use export so that third party module can use it.
   configure: function(app) {
 
-    app.get('/index.html', function (req, res) {
+    app.get('/', function (req, res) {
        //res.sendFile('index.html', { root: '/Users/lenovo/Qphi/nodeapp/frontend/'});
        res.sendFile(path.resolve('/Users/lenovo/Qphi/nodeapp/frontend/index.html'));
     });

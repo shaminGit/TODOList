@@ -13,8 +13,8 @@ function Connection() {                           // defining connection functio
   });
  };
 
-this.acquire = function(callback){
-   this.pool.getConnection(function(err , connection){    
+this.acquire = function(callback){        //return back the connection for database handelling..
+   this.pool.getConnection(function(err , connection){
      callback(err, connection);
    });
  };

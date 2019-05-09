@@ -1,5 +1,5 @@
 var connection = require('../dbconfig/connection');
-
+//var display = require('dom.js');
 // declaring function // TODO:
 
 function Todo() {
@@ -23,28 +23,44 @@ function Todo() {
   };
   // this section will handle the login task..
   this.login = function(todo,res) {
+    var username=todo.username;
+    var pass = todo.pass;
+  // estabilishing connectin for verifying login credentials..
     connection.acquire(function(err,con) {
-      var username=todo.username;
-      var pass = todo.pass;
-
-      con.query('select *from list where username= ?', username , function(err,result) {
-        con.release();
+        con.query('select *from list where username= ?', username , function(err,result) {
+        //con.release();
         var string = JSON.stringify(result);   // to convert rowdatapacket into json object
-        var json = JSON.parse(string);
+        var json1 = JSON.parse(string);
         if (err) {
           res.send({status:1, message:'TODO creation fail'});
         }
         else {
-          if(json[0].pass == pass)
+          if(json1[0].pass == pass)
           {
-            res.send({status:0,message:"Login Successful"});
+            res.send('<h1>Login Successful!!</h1><button type="submit"><a href="http://localhost:5000/index.html"><b>Lets Start</a></button>');
             console.log("Login Successfull");
-          }
-        else res.send({status:0, message:'Enter correct Password'});
+            // estabilishing connections for displaying notes..
+            con.query('select *from usernotes where username= ?',username, function(err , result){
+                 con.release();
+                 var string = JSON.stringify(result);   // to convert rowdatapacket into json object
+                 var json2 = JSON.parse(string);
+                 if (err) {
+                 //res.send({status:1, message:'fetching from database failed'});
+                 }
+                 else {
+                 //  res.send({note:json2[0].usernote});
+                  console.log(json2[0].usernote);      // fetching the uesrnote value from json object
+                 }
+               });
+           }
+        else res.send('<h1>Login Failed!!</h1><button type="submit"><a href="http://localhost:5000/login.html"><b>Try Again</a></button>');
          }
+
       });
-    });
-  };
+
+   });
+  }
+
   this.signup = function(todo,res) {
     connection.acquire(function(err,con) {
       con.query('insert into list set ?', todo, function(err,result) {
