@@ -8,7 +8,9 @@ module.exports = {                                //now use export so that third
        res.sendFile(path.resolve('/Users/lenovo/Qphi/nodeapp/frontend/index.html'));
     });
     app.post('/fetchnote',function(req,res) {
-      todo.fetchnote(req.body,res);
+      let pars = (Object.keys(req.body).length > 0)?req.body:req.query;
+      console.log(pars);
+      todo.fetchnote(pars,res);
     });
     app.get('/todo',function(req,res) {
       todo.get(res);

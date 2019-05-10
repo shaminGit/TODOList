@@ -22,15 +22,18 @@ function Todo() {
       });
     });
   };
-  this.fetchnote = function(todo , res){
-    connection.acquire(function(err, con){
-       console.log(todo);
-        con.query('select usernote from usernotes where username = ?',"shamin",function(err , result){
+  this.fetchnote = function(todo,res){
+        // console.log(todo.username);
+         connection.acquire(function(err, con){
+
+          con.query('select *from usernotes where username= ?',todo.username , function(err , result){
           con.release();
+
+
           var str = JSON.stringify(result);
-          var json = JSON.parse(str);
-          res.send(json);    // row data packet
-          console.log(json);   //row data packet
+        //var json = JSON.parse(str);
+          res.send(str);    //
+         console.log(str);   //
         });
     });
   };
