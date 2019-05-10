@@ -2,9 +2,12 @@
 //var global;
 function loginForm(form){
   //var usr = form.elements.namedItem("username").value;
-  var str = document.getElementById("loginform").elements[0].value;
-  history(str);
-  form.submit();
+  var username = document.getElementById("loginform").elements[0].value;
+  var pass = document.getElementById("loginform").elements[1].value;         // xxxx
+  //alert("just before sendData!!");
+  //sendData(username , pass);
+   getHistory(username);
+//  form.submit();
 }
 
 function signUpForm(form){
@@ -69,17 +72,49 @@ function addElement() {
   }
 }
 // this function will be called after user login successfull..
-function history(str) {
-   var xmlhttp = new XMLHttpRequest();                           //  here AJAX is required to fetch data from server..
+function sendData(username, pass) {
+
+   var xmlhttp = new XMLHttpRequest();
+                   //  here AJAX is required to fetch data from server..
    xmlhttp.onreadystatechange = function() {
        if (this.readyState == 4 && this.status == 200) {
-           updateList(this);
+      //     alert("i am inside readyState");
+            showLogInfo(this);            //xxxxx
+       }
+   };
+  var parameters="username="+username+"&pass="+pass;
+  xmlhttp.open("POST", "/login", true);       //xxxxxxxx
+  xmlhttp.send(parameters);
+
+}
+
+ function getHistory(username) {
+   var xmlhttp = new XMLHttpRequest();
+   console.log("just before get history");                         //  here AJAX is required to fetch data from server..
+   xmlhttp.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+        // updateList(this);
+           updateList(this);            //xxxxx
        }
    };
 
-   xmlhttp.open("POST", "http://localhost:5000/fetchnote?username="+str, true);
+   xmlhttp.open("POST", "http://localhost:5000/fetchnote?username="+username, true);       //xxxxxxxx
       xmlhttp.send();
 }
+
+
+function showLogInfo(arr){
+   //var str = arr.responseText;
+   console.log("from showLogInfo!!");
+//  var json = JSON.parse(str);
+  //if (str["status"]=="0")
+  //alert("Login Successfully!!");
+  //else if (json["status"]=="1")
+  //alert("Login Failed");
+  }
+
+
+
 
 function updateList(arr) {
   var str = arr.responseText;
@@ -128,10 +163,10 @@ function myFunction() {
 
     //alert("You have no previous data!!");
 
+var p;
+   for(p = 0; p < json.length; p++) {
 
-   for(i = 0; i < json.length; i++) {
-
-     var input = json[i].usernote;
+     var input = json[p].usernote;
      var li = document.createElement("li");
      var t = document.createTextNode(input);
 
@@ -148,9 +183,9 @@ function myFunction() {
    span.className = "close";
    span.appendChild(txt);
    li.appendChild(span);               //
-   var j=0;
-   for (j = 0; j < close.length; j++) {
-     close[i].onclick = function() {
+   var m=0;
+   for (m = 0; m < close.length; m++) {
+     close[m].onclick = function() {
        var div = this.parentElement;
        div.style.display = "none";
      }
