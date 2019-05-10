@@ -16,7 +16,7 @@ function signUpForm(form){
 
 // Create a "close" button and append it to each list item
 var myNodelist = document.getElementsByTagName("LI");
-//var obj = [];
+var node = [];
 var i;
 for (i = 0; i < myNodelist.length; i++) {
   var span = document.createElement("SPAN");
@@ -49,7 +49,7 @@ function addElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
   var t = document.createTextNode(inputValue);
-//  obj = obj.push(t);
+  node.push(inputValue);
   li.appendChild(t);
   if (inputValue === '') {
     alert("You must write something!");
@@ -193,4 +193,24 @@ var p;
   }
 alert("You are now Loged In..");
 
+}
+
+function save(){
+console.log(node);
+//console.log("just before get history");                         //  here AJAX is required to fetch data from server..
+for(var p=0; p<node.length ; p++)
+ {
+   var xmlhttp = new XMLHttpRequest();
+   xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     // updateList(this);
+      console.log(this.responseText);            //xxxxx
+    }
+};
+
+
+   xmlhttp.open("POST", "http://localhost:5000/update?node="+node[p], true);       //xxxxxxxx
+   xmlhttp.send();
+
+ }
 }
