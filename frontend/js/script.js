@@ -1,23 +1,24 @@
 "use strict";
 //var global;
-function loginForm(form){
+var addnode = [];                                        // to add all new node into one array and send it to server
+var delnode = [];
+var i;
+
+function loginForm(){
   //var usr = form.elements.namedItem("username").value;
   var username = document.getElementById("loginform").elements[0].value;
   var pass = document.getElementById("loginform").elements[1].value;         // xxxx
-  //alert("just before sendData!!");
-  //sendData(username , pass);
+
+  window.localStorage.setItem('name', username);
    getHistory(username);
 //  form.submit();
 }
-
 function signUpForm(form){
     form.submit();
   }
-
 // Create a "close" button and append it to each list item
 var myNodelist = document.getElementsByTagName("LI");
-var node = [];
-var i;
+
 for (i = 0; i < myNodelist.length; i++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
@@ -31,6 +32,8 @@ var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
+    //delnode.push(document.getElementsById("myInput").value);  //xxxx
+   alert("first!!");
     var div = this.parentElement;
     div.style.display = "none";
   }
@@ -49,7 +52,7 @@ function addElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
   var t = document.createTextNode(inputValue);
-  node.push(inputValue);
+  addnode.push(inputValue);
   li.appendChild(t);
   if (inputValue === '') {
     alert("You must write something!");
@@ -65,7 +68,8 @@ function addElement() {
   li.appendChild(span);
  var k;
   for (k = 0; k < close.length; k++) {
-    close[i].onclick = function() {
+    close[k].onclick = function() {
+      alert("Your data will be deleted permanently!!");
       var div = this.parentElement;
       div.style.display = "none";
     }
@@ -82,13 +86,14 @@ function sendData(username, pass) {
             showLogInfo(this);            //xxxxx
        }
    };
-  var parameters="username="+username+"&pass="+pass;
+  var parameters="username="+username[0]+"&pass="+pass;
   xmlhttp.open("POST", "/login", true);       //xxxxxxxx
   xmlhttp.send(parameters);
 
 }
 
- function getHistory(username) {
+ function getHistory(user) {
+   alert(user);
    var xmlhttp = new XMLHttpRequest();
    console.log("just before get history");                         //  here AJAX is required to fetch data from server..
    xmlhttp.onreadystatechange = function() {
@@ -98,7 +103,7 @@ function sendData(username, pass) {
        }
    };
 
-   xmlhttp.open("POST", "http://localhost:5000/fetchnote?username="+username, true);       //xxxxxxxx
+   xmlhttp.open("POST", "http://localhost:5000/fetchnote?username="+user, true);       //xxxxxxxx
       xmlhttp.send();
 }
 
@@ -147,8 +152,10 @@ function updateList(arr) {
   li.appendChild(span);               //
   var j=0;
   for (j = 0; j < close.length; j++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
+    close[j].onclick = function() {
+    alert("Your saved data will be deleted permanently!!");
+     var div = this.parentElement;
+
       div.style.display = "none";
     }
   }
@@ -196,20 +203,21 @@ alert("You are now Loged In..");
 }
 
 function save(){
-console.log(node);
-//console.log("just before get history");                         //  here AJAX is required to fetch data from server..
-for(var p=0; p<node.length ; p++)
+ var user = window.localStorage.getItem('name');
+ alert(user);
+
+//  here AJAX is required to fetch data from server..
+for(var p=0; p<addnode.length ; p++)
  {
    var xmlhttp = new XMLHttpRequest();
    xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
      // updateList(this);
-      console.log(this.responseText);            //xxxxx
+      console.log(this.responseText);
+      alert("Saved Successfully to our server!!");            //xxxxx
     }
 };
-
-
-   xmlhttp.open("POST", "http://localhost:5000/update?node="+node[p], true);       //xxxxxxxx
+   xmlhttp.open("POST", "http://localhost:5000/update?user="+user+"&node="+addnode[p], true);       //xxxxxxxx
    xmlhttp.send();
 
  }

@@ -86,8 +86,11 @@ function Todo() {
 
   this.update = function(todo,res) {
       console.log(todo.node);
+      console.log(todo.user);
+
       connection.acquire(function(err,con) {
-      con.query('insert into usernotes (username,usernote) values ("shamin", ?)', todo.node , function(err,result) {
+
+      con.query('insert into usernotes(username,usernote) values (?,?)',[todo.user ,todo.node], function(err,result) {
         con.release();
         if (err) {
           res.send({status:1, message:'update fail'});
