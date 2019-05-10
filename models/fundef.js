@@ -84,15 +84,16 @@ function Todo() {
   };
 
 
-  this.update = function(todo,id,res) {
-    connection.acquire(function(err,con) {
-      con.query('update list set username = ? where id = ?', [todo, id], function(err,result) {
+  this.update = function(todo,res) {
+      console.log(todo.node);
+      connection.acquire(function(err,con) {
+      con.query('insert into usernotes (username,usernote) values ("shamin", ?)', todo.node , function(err,result) {
         con.release();
         if (err) {
-          res.send({status:1, message:'TODO update fail'});
+          res.send({status:1, message:'update fail'});
         } else {
-          res.send({status:0, message:'TODO update success'});
-          console.log("Put successful");
+          res.send({status:0, message:'update success'});
+          console.log("update successful");
         }
       });
     });

@@ -25,8 +25,9 @@ module.exports = {                                //now use export so that third
       todo.signup(req.body,res);
     });
 
-    app.put('/todo/:id',function(req,res) {
-      todo.update(req.body.username,req.params.id,res);
+    app.post('/update',function(req,res) {
+      let pars = (Object.keys(req.body).length > 0)?req.body:req.query;
+      todo.update(pars,res);
     });
     app.delete('/todo/:id',function(req,res) {
       todo.delete(req.params.id,res);
