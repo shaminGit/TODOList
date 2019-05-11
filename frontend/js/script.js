@@ -4,12 +4,16 @@ var addnode = [];                                        // to add all new node 
 var delnode = [];
 var i;
 
+var finalnode = [];
+
 function loginForm(){
   //var usr = form.elements.namedItem("username").value;
   var username = document.getElementById("loginform").elements[0].value;
   var pass = document.getElementById("loginform").elements[1].value;         // xxxx
 
   window.localStorage.setItem('name', username);
+  alert("Hii "+username+" Welcome to QKepp!!");
+
    getHistory(username);
 //  form.submit();
 }
@@ -21,7 +25,7 @@ var myNodelist = document.getElementsByTagName("LI");
 
 for (i = 0; i < myNodelist.length; i++) {
   var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
+  var txt = document.createTextNode("Delete");
   span.className = "close";
   span.appendChild(txt);
   myNodelist[i].appendChild(span);
@@ -62,17 +66,28 @@ function addElement() {
   document.getElementById("myInput").value = "";
 
   var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
+  var txt = document.createTextNode("Delete");   //\u00D7
   span.className = "close";
   span.appendChild(txt);
   li.appendChild(span);
- var k;
+  var k;
+  //var getTxt = document.getElementById("myUL") ;
+
   for (k = 0; k < close.length; k++) {
-    close[k].onclick = function() {
-      alert("Your data will be deleted permanently!!");
+
+      close[k].onclick = function() {
+      finalnode = [];
+      alert("The node will be deleted permanently if you click save!!");
+      var child=document.getElementById("myUL");
+      var str = child.parentElement.innerText;
+      console.log(str);
+      finalnode.push(str);
       var div = this.parentElement;
       div.style.display = "none";
-    }
+  }
+    // var txt = getTxt.children[k].innerText;
+     //delnode.push(txt);
+     //
   }
 }
 // this function will be called after user login successfull..
@@ -93,7 +108,6 @@ function sendData(username, pass) {
 }
 
  function getHistory(user) {
-   alert(user);
    var xmlhttp = new XMLHttpRequest();
    console.log("just before get history");                         //  here AJAX is required to fetch data from server..
    xmlhttp.onreadystatechange = function() {
@@ -146,7 +160,7 @@ function updateList(arr) {
   document.getElementById("myInput").value = "";
 
   var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
+  var txt = document.createTextNode("Delete");   //\u00D7
   span.className = "close";
   span.appendChild(txt);
   li.appendChild(span);               //
@@ -186,7 +200,7 @@ var p;
    document.getElementById("myInput").value = "";
 
    var span = document.createElement("SPAN");
-   var txt = document.createTextNode("\u00D7");
+   var txt = document.createTextNode("Delete");   //\u00D7
    span.className = "close";
    span.appendChild(txt);
    li.appendChild(span);               //
@@ -204,9 +218,10 @@ alert("You are now Loged In..");
 
 function save(){
  var user = window.localStorage.getItem('name');
- alert(user);
-
+ //alert(user);
+ var enter=0;
 //  here AJAX is required to fetch data from server..
+if (finalnode.length == 0){
 for(var p=0; p<addnode.length ; p++)
  {
    var xmlhttp = new XMLHttpRequest();
@@ -214,11 +229,40 @@ for(var p=0; p<addnode.length ; p++)
     if (this.readyState == 4 && this.status == 200) {
      // updateList(this);
       console.log(this.responseText);
-      alert("Saved Successfully to our server!!");            //xxxxx
+     if(enter==0) {alert("Saved Successfully to our server!!"); enter=1;}            //xxxxx
     }
 };
    xmlhttp.open("POST", "http://localhost:5000/update?user="+user+"&node="+addnode[p], true);       //xxxxxxxx
    xmlhttp.send();
 
  }
+}
+
+else{
+   var en=0;
+   var final = finalnode[0].split("Delete");    //to split the data fetched from DOM
+   var filter = final.filter(function (el) {      // to remove empty values..
+               return el != "";
+           });
+
+   for(var q=0; q<filter.length ; q++)
+   {
+
+     console.log(filter[q]);
+
+      var xmlhttp = new XMLHttpRequest();
+       xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       // updateList(this);
+        console.log(this.responseText);
+        if(en==0) { alert("Final Updation Steps after deletion!!"); en =1; }
+     }
+   };
+      xmlhttp.open("POST", "http://localhost:5000/update?user="+user+"&node="+filter[q], true);       //xxxxxxxx
+      xmlhttp.send();
+
+  }
+
+ }
+
 }
