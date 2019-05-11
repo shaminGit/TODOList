@@ -2,9 +2,17 @@
 //var global;
 var addnode = [];                                        // to add all new node into one array and send it to server
 var delnode = [];
-var i;
+var o,p;
 
 var finalnode = [];
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'li') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
 
 function loginForm(){
   //var usr = form.elements.namedItem("username").value;
@@ -23,7 +31,7 @@ function signUpForm(form){
 // Create a "close" button and append it to each list item
 var myNodelist = document.getElementsByTagName("LI");
 
-for (i = 0; i < myNodelist.length; i++) {
+for (o = 0; o < myNodelist.length; o++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("Delete");
   span.className = "close";
@@ -33,8 +41,8 @@ for (i = 0; i < myNodelist.length; i++) {
 
 // Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
+
+for (p = 0; p < close.length; p++) {
   close[i].onclick = function() {
     //delnode.push(document.getElementsById("myInput").value);  //xxxx
    alert("first!!");
@@ -43,16 +51,23 @@ for (i = 0; i < close.length; i++) {
   }
 }
 
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
+
 
 // Create a new list item when clicking on the "Add" button
 function addElement() {
+// Add a "checked" symbol when clicking on a list item
+  var list = document.querySelector('ul');
+  list.addEventListener('click', function(ev) {
+
+    if (ev.target.tagName === 'LI') {
+      ev.target.classList.toggle('checked');
+           // fetch the value entered in input coloumn!!
+       //alert("Click ok to modify with input value!!"+document.getElementById("myInput").value );
+      //document.getElementsByTagName(ev.target.tagName)[1].innerText = document.getElementById("myInput").value ;
+    }
+
+}, true);
+
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
   var t = document.createTextNode(inputValue);
@@ -89,6 +104,7 @@ function addElement() {
      //delnode.push(txt);
      //
   }
+
 }
 // this function will be called after user login successfull..
 function sendData(username, pass) {
@@ -136,6 +152,15 @@ function showLogInfo(arr){
 
 
 function updateList(arr) {
+
+  // Add a "checked" symbol when clicking on a list item
+    var list = document.querySelector('ul');
+    list.addEventListener('click', function(ev) {
+      if (ev.target.tagName === 'LI') {
+        ev.target.classList.toggle('checked');
+      }
+    }, true);
+
   var str = arr.responseText;
   var json = JSON.parse(str);
   var out = "";
@@ -241,7 +266,7 @@ for(var p=0; p<addnode.length ; p++)
 else{
    var en=0;
    var final = finalnode[0].split("Delete");    //to split the data fetched from DOM
-   var filter = final.filter(function (el) {      // to remove empty values..
+   var filter = final.filter(function (el) {      // to remove empty values if any..
                return el != "";
            });
 

@@ -29,6 +29,7 @@ module.exports = {                                //now use export so that third
       let pars = (Object.keys(req.body).length > 0)?req.body:req.query;
       todo.update(pars,res);
     });
+  
     app.delete('/todo/:id',function(req,res) {
       todo.delete(req.params.id,res);
     });

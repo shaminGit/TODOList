@@ -75,10 +75,10 @@ ul li {
   transition: 0.2s;
 
   /* make the list items unselectable */
-  -webkit-user-select: none;
+  /*-webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none;*/
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
@@ -165,7 +165,7 @@ input {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 0;
-  margin-top: 5px;
+  margin-top: 7px;
   margin-right: 5px;
 }
 

@@ -102,6 +102,9 @@ function Todo() {
     });
   };
 
+  
+
+
   this.delete = function(id,res) {
     connection.acquire(function(err,con) {
       con.query('delete from list where id = ?', id, function(err,result) {
