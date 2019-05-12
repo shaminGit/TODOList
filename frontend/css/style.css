@@ -58,7 +58,6 @@ header a:hover{
   display:none;
 }
 
-
 body {
   margin: 0;
   min-width: 250px;
@@ -182,4 +181,15 @@ input {
 
 .addBtn:hover {
   background-color: #bbb;
+}
+
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #ffffff;
+  background-color: #35424a;
+  text-align: center;
+  border-top: 7px solid #c6c6bc;
 }

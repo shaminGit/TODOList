@@ -4,13 +4,16 @@ var addnode = [];                                        // to add all new node 
 var delnode = [];
 var finalnode = [];
 
+
+
+
 function loginForm(){
   //var usr = form.elements.namedItem("username").value;
   var username = document.getElementById("loginform").elements[0].value;
   var pass = document.getElementById("loginform").elements[1].value;         // xxxx
 
   localStorage.setItem('name', username);
-  alert("Hii "+username+" Welcome to QKepp!!");
+  //alert("Hii "+username+" Welcome to QKepp!!");
 
    getHistory(username);
 //  form.submit();
