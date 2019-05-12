@@ -5,7 +5,13 @@ var delnode = [];
 var finalnode = [];
 
 
-
+// Add addEventListener for deletednode
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'li') {
+     alert(document.parentNode.innerText);
+  }
+}, true);
 
 function loginForm(){
   //var usr = form.elements.namedItem("username").value;
