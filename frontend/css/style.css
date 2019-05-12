@@ -36,6 +36,13 @@ header #nav{
   display: inline;
   padding: 0 20px 0 20px;
 }
+header #user{
+  margin-top: 20px;
+  float: left;
+  display: inline;
+  padding: 0 20px 0 20px;
+
+}
 
 header .highlight , header .current a{
   color: #1fb8e2;
@@ -45,6 +52,10 @@ header .highlight , header .current a{
 header a:hover{
   color: #cccccc;
   font-weight: bold;
+}
+
+#user:empty {
+  display:none;
 }
 
 

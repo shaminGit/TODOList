@@ -2,24 +2,14 @@
 //var global;
 var addnode = [];                                        // to add all new node into one array and send it to server
 var delnode = [];
-var o,p;
-
 var finalnode = [];
-
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'li') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
 
 function loginForm(){
   //var usr = form.elements.namedItem("username").value;
   var username = document.getElementById("loginform").elements[0].value;
   var pass = document.getElementById("loginform").elements[1].value;         // xxxx
 
-  window.localStorage.setItem('name', username);
+  localStorage.setItem('name', username);
   alert("Hii "+username+" Welcome to QKepp!!");
 
    getHistory(username);
@@ -28,10 +18,10 @@ function loginForm(){
 function signUpForm(form){
     form.submit();
   }
-// Create a "close" button and append it to each list item
+  // add addEventListener for LogOut
+  // Create a "close" button and append it to each list item
 var myNodelist = document.getElementsByTagName("LI");
-
-for (o = 0; o < myNodelist.length; o++) {
+for (var o = 0; o < myNodelist.length; o++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("Delete");
   span.className = "close";
@@ -42,7 +32,7 @@ for (o = 0; o < myNodelist.length; o++) {
 // Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
 
-for (p = 0; p < close.length; p++) {
+for (var p = 0; p < close.length; p++) {
   close[i].onclick = function() {
     //delnode.push(document.getElementsById("myInput").value);  //xxxx
    alert("first!!");
@@ -51,21 +41,13 @@ for (p = 0; p < close.length; p++) {
   }
 }
 
-
-
-// Create a new list item when clicking on the "Add" button
 function addElement() {
 // Add a "checked" symbol when clicking on a list item
-  var list = document.querySelector('ul');
-  list.addEventListener('click', function(ev) {
-
-    if (ev.target.tagName === 'LI') {
-      ev.target.classList.toggle('checked');
-           // fetch the value entered in input coloumn!!
-       //alert("Click ok to modify with input value!!"+document.getElementById("myInput").value );
-      //document.getElementsByTagName(ev.target.tagName)[1].innerText = document.getElementById("myInput").value ;
-    }
-
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'li') {
+    ev.target.classList.toggle('checked');
+  }
 }, true);
 
   var li = document.createElement("li");
@@ -85,12 +67,10 @@ function addElement() {
   span.className = "close";
   span.appendChild(txt);
   li.appendChild(span);
-  var k;
-  //var getTxt = document.getElementById("myUL") ;
 
-  for (k = 0; k < close.length; k++) {
 
-      close[k].onclick = function() {
+  for ( var v = 0; v<close.length; v++) {
+      close[v].onclick = function() {
       finalnode = [];
       alert("The node will be deleted permanently if you click save!!");
       var child=document.getElementById("myUL");
@@ -99,10 +79,7 @@ function addElement() {
       finalnode.push(str);
       var div = this.parentElement;
       div.style.display = "none";
-  }
-    // var txt = getTxt.children[k].innerText;
-     //delnode.push(txt);
-     //
+    }
   }
 
 }
@@ -124,12 +101,13 @@ function sendData(username, pass) {
 }
 
  function getHistory(user) {
+
    var xmlhttp = new XMLHttpRequest();
-   console.log("just before get history");                         //  here AJAX is required to fetch data from server..
+                       //  here AJAX is required to fetch data from server..
    xmlhttp.onreadystatechange = function() {
        if (this.readyState == 4 && this.status == 200) {
         // updateList(this);
-           updateList(this);            //xxxxx
+         updateList(this);            //xxxxx
        }
    };
 
@@ -148,68 +126,27 @@ function showLogInfo(arr){
   //alert("Login Failed");
   }
 
-
-
-
-function updateList(arr) {
-
-  // Add a "checked" symbol when clicking on a list item
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function(ev) {
-      if (ev.target.tagName === 'LI') {
-        ev.target.classList.toggle('checked');
-      }
-    }, true);
-
-  var str = arr.responseText;
-  var json = JSON.parse(str);
-  var out = "";
-  var i;
-  var input;
-  console.log(json.length);
-
-  localStorage["userData"] = JSON.stringify(json);
-
-  for(i = 0; i < json.length; i++) {
-
-    input = json[i].usernote;
-    var li = document.createElement("li");
-    var t = document.createTextNode(input);
-
-    li.appendChild(t);
-    if (input === '') {
-     alert("You must write something!");
-   } else {
-    document.getElementById("myUL").appendChild(li);
-    }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("Delete");   //\u00D7
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);               //
-  var j=0;
-  for (j = 0; j < close.length; j++) {
-    close[j].onclick = function() {
-    alert("Your saved data will be deleted permanently!!");
-     var div = this.parentElement;
-
-      div.style.display = "none";
-    }
+   function updateList(arr) {
+    var str = arr.responseText;
+    var json = JSON.parse(str);
+  //  alert("before localStorage");                         // delete alerts
+    localStorage["userData"] = JSON.stringify(json);
   }
- }
-
-}
 
 
-function myFunction() {
 
+function myFunction(){
+document.getElementById("user").innerText = "";
+var log = localStorage.getItem('name');
+if(log != "false")
+{
+
+   // this section will  change the login name to log account
+   document.getElementById("user").innerText = "LogOut";
    var json = JSON.parse(localStorage["userData"]);
+   var p;
 
-    //alert("You have no previous data!!");
 
-var p;
    for(p = 0; p < json.length; p++) {
 
      var input = json[p].usernote;
@@ -229,16 +166,17 @@ var p;
    span.className = "close";
    span.appendChild(txt);
    li.appendChild(span);               //
-   var m=0;
+   var m;
    for (m = 0; m < close.length; m++) {
      close[m].onclick = function() {
+      alert("The node will be deleted permanently if you click save!!");
        var div = this.parentElement;
        div.style.display = "none";
      }
    }
   }
-alert("You are now Loged In..");
-
+ alert("You are Loged In "+log);
+}
 }
 
 function save(){
@@ -272,9 +210,7 @@ else{
 
    for(var q=0; q<filter.length ; q++)
    {
-
-     console.log(filter[q]);
-
+      console.log(filter[q]);
       var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -285,9 +221,14 @@ else{
    };
       xmlhttp.open("POST", "http://localhost:5000/update?user="+user+"&node="+filter[q], true);       //xxxxxxxx
       xmlhttp.send();
-
   }
-
  }
+}
+
+function logout(){
+  alert("You will be logged out!! "+window.localStorage.getItem('name'));
+  document.getElementById("user").innerText = "";
+  document.getElementById("myUL").innerHTML= "";
+  localStorage.setItem('name','false');
 
 }
