@@ -1,6 +1,6 @@
 create database userinfo;
 use userinfo;
-create table [if not exists] list (username varchar(50) not null ,pass varchar(50) not null) Engine = inndb;
+create table [if not exists] list (username varchar(50) not null ,pass varchar(50) not null) Engine = innodb;
 create table [if not exists] usernotes (user_id int not null auto_increment , username varchar(50)not null , usernote varchar (255) not null , primary key (user_id));
 alter table usernotes add constraint (username ,usernote);
 
