@@ -1,0 +1,3 @@
+insert into list (username, pass) values ("Shamin" ,"shapass"),("Adnan", "adapass"),("Rohit" , "rohpass");
+insert into usernotes (username , usernote) values ("Shamin","hey this is my first note"), ("Shamin","hey this is my second note!!");
+insert into usernotes (username , usernote) values ("Rohit","hey this is my first note"), ("Rohit","hey this is my second note!!");
